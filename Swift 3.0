@@ -1,0 +1,283 @@
+//
+//  addViewController.swift
+//  mystyle
+//
+//  Created by aervea on 16/11/19.
+//  Copyright © 2016年 aervea. All rights reserved.
+//
+
+import UIKit
+
+class addViewController: UIViewController {
+    
+    let textHeigthLable = UILabel()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        view.backgroundColor = UIColor.rgba("#fefefe")
+        addersBook()
+    }
+    
+    
+    func addersBook() {
+        //头部菜单
+        let topBarView = UIView()
+        view.addSubview(topBarView)
+        topBarView.snp.makeConstraints { (make) in
+            make.top.left.right.equalTo(view).offset(0)
+            make.height.equalTo(64)
+        }
+        topBarView.backgroundColor = UIColor.rgba("#f2f2f2")
+        
+        
+        
+        
+        let backBtn = UIButton()
+        topBarView.addSubview(backBtn)
+        backBtn.snp.makeConstraints { (make) in
+            make.left.equalTo(topBarView).offset(12)
+            make.bottom.equalTo(topBarView).offset(-10)
+            make.width.height.equalTo(27)
+        }
+        backBtn.setImage(UIImage(named: "back_icon"), for: UIControlState()) //按钮转换成图片
+        
+        //标题：添加个人信息
+        let titleLabel = makeLable(name: "添加个人信息")
+        topBarView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { (make) in
+            make.centerX.equalTo(topBarView.snp.centerX)
+            make.bottom.equalTo(topBarView).offset(-12)
+        }
+        titleLabel.setFontSize(18)
+        
+        //内容区域
+        let contentsView = UIView()
+        view.addSubview(contentsView)
+        contentsView.snp.makeConstraints { (make) in
+            make.top.equalTo(topBarView).offset(64)
+            make.left.right.bottom.equalTo(view).offset(0)
+        }
+        
+        //姓名
+        let nameLabel = makeLable(name: "姓名")
+        contentsView.addSubview(nameLabel)
+        nameLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(contentsView).offset(24)
+            make.left.equalTo(contentsView).offset(16)
+        }
+        
+        let textName = makeTextField()
+        contentsView.addSubview(textName)
+        textName.snp.makeConstraints { (make) in
+            make.top.equalTo(contentsView).offset(16)
+            make.right.equalTo(contentsView).offset(-12)
+            make.left.equalTo(nameLabel).offset(40)
+        }
+        
+        textName.returnKeyType = .next
+        
+        //性别
+        let sexLabel = makeLable(name:"性别")
+        contentsView.addSubview(sexLabel)
+        sexLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(textName.snp.bottom).offset(20)
+            make.left.equalTo(contentsView).offset(16)
+        }
+        //性别选择
+        var sexSegmented = UISegmentedControl()
+        let item = ["男生","女生"]
+        sexSegmented = UISegmentedControl.init(items: item)
+        sexSegmented.selectedSegmentIndex = 0
+        contentsView.addSubview(sexSegmented)
+        sexSegmented.snp.makeConstraints { (make) in
+            make.top.equalTo(textName).offset(50)
+            make.left.equalTo(sexLabel).offset(40)
+            make.width.equalTo(120)
+            make.height.equalTo(40)
+        }
+        
+        //电话
+        let phoneLabel = makeLable(name: "电话")
+        contentsView.addSubview(phoneLabel)
+        phoneLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(sexSegmented).offset(60)
+            make.left.equalTo(contentsView).offset(16)
+        
+        }
+        
+        let textPhone = makeTextField()
+        contentsView.addSubview(textPhone)
+        textPhone.snp.makeConstraints { (make) in
+            make.top.equalTo(sexSegmented).offset(50)
+            make.right.equalTo(contentsView).offset(-12)
+            make.left.equalTo(phoneLabel).offset(40)
+        }
+        textPhone.keyboardType = .phonePad
+        textPhone.returnKeyType = .next
+        
+        //邮箱
+        let emailLabel = makeLable(name: "邮箱")
+        contentsView.addSubview(emailLabel)
+        emailLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(textPhone).offset(60)
+            make.left.equalTo(contentsView).offset(16)
+            
+        }
+        
+        let textEmail = makeTextField()
+        contentsView.addSubview(textEmail)
+        textEmail.snp.makeConstraints { (make) in
+            make.top.equalTo(textPhone).offset(50)
+            make.right.equalTo(contentsView).offset(-12)
+            make.left.equalTo(emailLabel).offset(40)
+        }
+        textEmail.keyboardType = .emailAddress
+        textEmail.returnKeyType = .next
+        
+        
+        //婚姻
+        let marryLabel = makeLable(name:"婚姻")
+        contentsView.addSubview(marryLabel)
+        marryLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(textEmail).offset(60)
+            make.left.equalTo(contentsView).offset(16)
+        }
+        //婚姻选择
+        var marrySegmented = UISegmentedControl()
+        let item1 = ["单身","已婚"]
+        marrySegmented = UISegmentedControl.init(items: item1)
+        marrySegmented.selectedSegmentIndex = 0
+        contentsView.addSubview(marrySegmented)
+        marrySegmented.snp.makeConstraints { (make) in
+            make.top.equalTo(textEmail).offset(50)
+            make.left.equalTo(sexLabel).offset(40)
+            make.width.equalTo(120)
+            make.height.equalTo(40)
+        }
+        
+        //身高
+        let heightLabel = makeLable(name: "身高")
+        contentsView.addSubview(heightLabel)
+        heightLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(marrySegmented).offset(60)
+            make.left.equalTo(contentsView).offset(16)
+        }
+        let slider = UISlider()
+        slider.minimumValue = 100
+        slider.maximumValue = 200
+        slider.addTarget(self, action: #selector(addViewController.aa(send:)), for: .valueChanged)
+        contentsView.addSubview(slider)
+        slider.snp.makeConstraints { (make) in
+            make.top.equalTo(marrySegmented).offset(50)
+            make.left.equalTo(heightLabel).offset(40)
+            make.right.equalTo(contentsView).offset(-80)
+            make.height.equalTo(40)
+        }
+        
+        
+
+        contentsView.addSubview(textHeigthLable)
+        textHeigthLable.snp.makeConstraints { (make) in
+            make.top.equalTo(marrySegmented).offset(60)
+            make.right.equalTo(contentsView).offset(-12)
+            make.width.equalTo(80)
+        }
+        
+        textHeigthLable.setFontSize(13)
+        textHeigthLable.textColor = UIColor.rgba("#333333")
+        textHeigthLable.textAlignment = .right
+        textHeigthLable.text = "100厘米"
+        
+        
+        
+        
+        
+        //体重
+        let weightlLabel = makeLable(name: "体重")
+        contentsView.addSubview(weightlLabel)
+        weightlLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(slider).offset(60)
+            make.left.equalTo(contentsView).offset(16)
+            
+        }
+        
+        let textWeight = makeTextField()
+        contentsView.addSubview(textWeight)
+        textWeight.snp.makeConstraints { (make) in
+            make.top.equalTo(slider).offset(50)
+            make.right.equalTo(contentsView).offset(-12)
+            make.left.equalTo(weightlLabel).offset(40)
+        }
+        textWeight.keyboardType = .phonePad
+        textWeight.returnKeyType = .done
+        
+        //生日
+        let birthdaylLabel = makeLable(name: "生日")
+        contentsView.addSubview(birthdaylLabel)
+        birthdaylLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(textWeight).offset(60)
+            make.left.equalTo(contentsView).offset(16)
+            
+        }
+        
+        let datePicker = UIDatePicker()
+        contentsView.addSubview(datePicker)
+        datePicker.snp.makeConstraints { (make) in
+            make.top.equalTo(textWeight).offset(50)
+            make.right.equalTo(contentsView).offset(-12)
+            make.left.equalTo(birthdaylLabel).offset(40)
+            make.height.equalTo(140)
+        }
+        //中文日期
+        datePicker.locale = Locale(identifier: "zh_CN")
+        datePicker.datePickerMode = .date
+        
+        //保存按钮
+        let btn = UIButton()
+        contentsView.addSubview(btn)
+        btn.snp.makeConstraints { (make) in
+            make.bottom.equalTo(view).offset(-14)
+            make.left.equalTo(view).offset(12)
+            make.right.equalTo(view).offset(-12)
+            make.height.equalTo(44)
+        }
+        btn.backgroundColor = UIColor.rgba("#2E89FB")
+        btn.setTitle("保存", for: UIControlState.normal)
+        btn.layer.cornerRadius = 4.0
+        
+        
+        
+        
+    }
+    
+    //设置一个共用的文字属性
+    func makeLable(name:String) -> UILabel {
+        let label = UILabel()
+        label.text = name
+        label.textColor = UIColor.rgba("#333333")
+        label.setFontSize(15)
+        return label
+    }
+    
+    
+    //设置一个共用的输入样式
+    func makeTextField() -> UITextField{
+        let input = UITextField()
+        input.layer.borderColor = UIColor.rgba("#dddddd").cgColor
+        input.layer.borderWidth = 1.0
+        input.textColor = UIColor.rgba("#2E89FB")
+        input.layer.backgroundColor = UIColor.rgba("#ffffff").cgColor
+        input.layer.cornerRadius = 4.0
+        input.snp.makeConstraints { (make) in
+            make.height.equalTo(40)
+        }
+        return input
+    }
+    
+    func aa(send: UISlider){
+        textHeigthLable.text = "\(Int(send.value))厘米"
+    }
+    
+}
